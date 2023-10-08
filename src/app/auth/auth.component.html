@@ -12,15 +12,38 @@
 
   <!-- Registration Form -->
   <div class="register-container">
-      <h2>Register</h2>
-      <form [formGroup]="registerForm" (ngSubmit)="register()">
-        <input type="text" placeholder="Name" formControlName="name">
-        <input type="text" placeholder="Username" formControlName="username">
-        <input type="password" placeholder="Password" formControlName="password">
-        <input type="email" placeholder="Email" formControlName="email">
-        <input type="text" placeholder="Zipcode" formControlName="zipcode">
-        <input type="text" placeholder="Phone" formControlName="phone">
-        <button type="submit">Register</button>
-    </form>
-  </div>
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <input type="text" placeholder="Name" formControlName="name">
+      <input type="text" placeholder="Username" formControlName="username">
+      
+      <!-- Email Validation -->
+      <input type="email" placeholder="Email" formControlName="email">
+      <div *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].hasError('invalidEmail')" class="error-message">
+        Please enter a valid email format
+      </div>
+
+      <!-- Zipcode Validation -->
+      <input type="text" placeholder="Zipcode (12345)" formControlName="zipcode">
+      <div *ngIf="registerForm.controls['zipcode'].touched && registerForm.controls['zipcode'].hasError('invalidZipcode')" class="error-message">
+        Please enter a 5-digit number
+      </div>
+
+      <!-- Phone Validation -->
+      <input type="text" placeholder="Phone (123-456-7890)" formControlName="phone">
+      <div *ngIf="registerForm.controls['phone'].touched && registerForm.controls['phone'].hasError('invalidPhone')" class="error-message">
+        Please enter XXX-XXX-XXXX format
+      </div>
+      
+      <input type="password" placeholder="Password" formControlName="password">
+      
+      <!-- Password Confirmation -->
+      <input type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+      <div *ngIf="registerForm.controls['confirmPassword'].touched && registerForm.hasError('mismatchedPasswords')" class="error-message">
+        Passwords do not match
+      </div>
+      
+      <button type="submit">Register</button>
+  </form>
+</div>
 </div>
