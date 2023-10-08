@@ -15,12 +15,17 @@ export class MainComponent implements OnInit {
   avatarUrl: string = 'https://picsum.photos/id/237/200/300'; // Assuming a local path; replace with actual path
 
 
-  posts: any[] = []; // Store the posts
+  posts: any; // Store the posts
+  username: any[] = [];
 
   constructor(private postService: PostService) {}  // Inject the PostService
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe(data => {
+    this.postService.getUser(1).subscribe(user => {
+      console.log(user.username);  // log the retrieved data to inspect it
+      this.username = user.username;
+    })
+    this.postService.getPosts(1).subscribe(data => {
       this.posts = data;
     });
   }
