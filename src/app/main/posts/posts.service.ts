@@ -6,12 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PostService {
-  private url: string = 'https://jsonplaceholder.typicode.com/posts';
+  private userUrl: string = 'https://jsonplaceholder.typicode.com/users';
+  private postUrl: string = 'https://jsonplaceholder.typicode.com/posts';
 
   constructor(private http: HttpClient) { 
   }
 
-  getPosts(): Observable<any[]> {
-    return this.http.get<any[]>(this.url);
+  getUser(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.userUrl}/${userId}`);
+}
+
+  getPosts(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.postUrl}?userId=${userId}`);
   }
 }
