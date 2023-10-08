@@ -1,0 +1,68 @@
+.landing-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.login-container, .register-container {
+  flex: 1;
+  margin: 20px 10px;
+  padding: 20px 40px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  display: inline-block;
+  padding: 10px 15px;
+  color: #fff;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 800px) {
+  .landing-container {
+      padding: 20px 10px;
+  }
+
+  .login-container, .register-container {
+      flex-basis: 100%; /* On smaller screens, each container takes full width */
+      margin-right: 0;
+  }
+}

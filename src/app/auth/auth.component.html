@@ -1,0 +1,26 @@
+<div class="landing-container">
+  <!-- Login Form -->
+  <div class="login-container">
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <input type="text" placeholder="Username" formControlName="username">
+          <input type="password" placeholder="Password" formControlName="password">
+          <div *ngIf="loginError" class="error-message">{{ loginError }}</div>
+          <button type="submit">Login</button>
+      </form>
+  </div>
+
+  <!-- Registration Form -->
+  <div class="register-container">
+      <h2>Register</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <input type="text" placeholder="Name" formControlName="name">
+        <input type="text" placeholder="Username" formControlName="username">
+        <input type="password" placeholder="Password" formControlName="password">
+        <input type="email" placeholder="Email" formControlName="email">
+        <input type="text" placeholder="Zipcode" formControlName="zipcode">
+        <input type="text" placeholder="Phone" formControlName="phone">
+        <button type="submit">Register</button>
+    </form>
+  </div>
+</div>

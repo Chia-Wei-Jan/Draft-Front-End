@@ -1,0 +1,22 @@
+<div class="user-info">
+    <img [src]="avatarUrl" alt="User Avatar" class="avatar">
+    <h2>{{ headline }}</h2>
+  </div>
+  
+  <div class="edit-headline">
+    <input [(ngModel)]="newHeadline" placeholder="Update headline...">
+    <button (click)="updateHeadline()">Update</button>
+  </div>
+
+
+  <div class="auth-button">
+    <button routerLink="/auth">Go to Landing Page</button>
+  </div>
+  <div class="profile-button">
+    <button routerLink="/profile">Go to Profile Page</button>
+  </div>
+
+
+  <div *ngFor="let post of posts">
+    <app-post [post]="post"></app-post>
+  </div>
