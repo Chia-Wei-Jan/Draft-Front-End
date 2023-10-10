@@ -7,4 +7,12 @@ import { Component, Input } from '@angular/core';
 })
 export class PostsComponent {
   @Input() post: any;
+
+  editPost(postId: number): void {
+    console.log(postId);
+  }
+
+  submitComment(postId: number, comment: string): void {
+    console.log(postId, comment);
+  }
 }

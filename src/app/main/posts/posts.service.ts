@@ -19,4 +19,8 @@ export class PostService {
   getPosts(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.postUrl}?userId=${userId}`);
   }
+
+  getAuthor(authorId: number): Observable<any> {
+    return this.http.get<any>(`${this.userUrl}/${authorId}`);
+  }
 }
