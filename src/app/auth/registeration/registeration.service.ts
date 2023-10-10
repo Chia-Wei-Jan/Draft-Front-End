@@ -22,4 +22,15 @@ export class RegisterationService {
       );
   }
 
+  setCurrentUser(user: any): void {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  getCurrentUser(): any {
+    return JSON.parse(localStorage.getItem('currentUser') || '{}');
+  }
+
+  clearCurrentUser(): void {
+    localStorage.removeItem('currentUser');
+  }
 }
