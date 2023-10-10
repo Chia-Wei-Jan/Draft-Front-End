@@ -66,6 +66,7 @@ export class AuthComponent implements OnInit {
     if (val.username && val.password) {
       this.registerationService.loginUser(val.username, val.password).subscribe((user: any[]) => {
         if (user) {
+          this.registerationService.setCurrentUser(user);
           this.router.navigate(['/main']);
         } else {
           this.loginError = 'Invalid username or password';
