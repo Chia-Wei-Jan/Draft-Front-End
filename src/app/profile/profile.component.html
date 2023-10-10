@@ -1,1 +1,34 @@
-<p>profile works!</p>
+<div class="profile">
+    <div class="profile-info">
+        <div class="profile-avatar">
+            <img [src]="avatarUrl" alt="User Avatar" class="avatar">
+            <input type="file" #inputImage (change)="uploadAvatar($event)" style="display: none;">
+            <button (click)="inputImage.click()">Add Photo</button>       
+        </div>
+        <h2>Profile Information</h2>
+        <div>
+            <label>Username: </label>
+            <span>{{ username }}</span>
+        </div>
+        <div>
+            <label>Email: </label>
+            <span>{{ email }}</span>
+        </div>
+        <div>
+            <label>Zipcode: </label>
+            <span>{{ zipcode }}</span>
+        </div>
+        <div>
+            <label>Phone: </label>
+            <span>{{ phone }}</span>
+        </div>
+        <div>
+            <label>Password: </label>
+            <span>******</span>
+        </div>
+    </div>
+
+    <div class="navigate-main">
+        <button routerLink="/main">Back to Main Page</button>
+    </div>
+</div>
