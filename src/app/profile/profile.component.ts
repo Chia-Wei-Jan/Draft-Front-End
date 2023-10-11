@@ -20,18 +20,36 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUser = this.registerationService.getCurrentUser();
+
     if (currentUser) {
       this.username = currentUser.username || '';
       this.email = currentUser.email || '';
-      this.zipcode = currentUser.address.zipcode || '';
-      this.phone = currentUser.phone || '';
-      this.password = '******';  // Placeholder for the password. We shouldn't display real passwords.
+
+      
+      if (currentUser.address && currentUser.address.zipcode) {
+        const formattedZipcode = currentUser.address.zipcode.split('-')[0];
+        this.zipcode = (formattedZipcode.length === 5) ? formattedZipcode : 'Invalid';
+      } else {
+        this.zipcode = '';
+      }
+  
+
+      if (currentUser.phone) {
+        const formattedPhone = currentUser.phone.split(' x')[0];
+        this.phone = formattedPhone || 'Invalid';
+      } else {
+        this.phone = '';
+      }
+
+      this.password = '******';  
+
       if (currentUser.avatarUrl) {
         this.avatarUrl = currentUser.avatarUrl;
       }
     }
   }
 
+  
   uploadAvatar(event: Event): void {
     const input = event?.target as HTMLInputElement;
     if(input.files && input.files[0]) {
