@@ -30,21 +30,25 @@
       <button (click)="clearPost()">Cancel</button>
     </div>
 
-    <div *ngFor="let post of filterPost" class="post-list">
-      <app-post [post]="post"></app-post>
-    </div>
+    <ng-container *ngIf="!newUser">
+      <div *ngFor="let post of filterPost" class="post-list">
+        <app-post [post]="post"></app-post>
+      </div>
+    </ng-container>
   </div>
 
   <aside class="sidebar">
     <input [(ngModel)]="newFollowerName" placeholder="User">
     <button (click)="addFollower()">Follow</button>
     <ul>
-      <li *ngFor="let user of followedUsers; let i = index">
-        <img [src]="user.avatar">
-        <h4>{{ user.name }}</h4>
-        <p>{{ user.headline }}</p>
-        <button (click)="unfollowUser(i)">Unfollow</button>
-      </li>
+      <ng-container *ngIf="!newUser">
+        <li *ngFor="let user of followedUsers; let i = index">
+          <img [src]="user.avatar">
+          <h4>{{ user.name }}</h4>
+          <p>{{ user.headline }}</p>
+          <button (click)="unfollowUser(i)">Unfollow</button>
+        </li>
+      </ng-container>
     </ul>
   </aside>
 

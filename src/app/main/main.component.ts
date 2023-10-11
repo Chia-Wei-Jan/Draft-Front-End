@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 
 export class MainComponent implements OnInit {
 
-  headline: string = 'Welcome to my profile!';
+  headline: string = 'To be or not to be, that is the question.';
   newHeadline: string = ''; // Temporary storage for the new headline being edited
   avatarUrl: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png'; // Assuming a local path; replace with actual path
 
@@ -55,14 +55,19 @@ export class MainComponent implements OnInit {
 
 
   selectImage: File | null = null;
-
+  newUser: boolean = false;
 
   constructor(private postService: PostService, private registerationService: RegisterationService, private router: Router) {}  // Inject the PostService
 
   ngOnInit(): void {
     const currentUser = this.registerationService.getCurrentUser();
 
+    if(!currentUser.id) {  // New user does not have ID
+      this.username = currentUser.username;
+    }
+
     if(currentUser && currentUser.id) {
+      console.log('5');
       this.postService.getUser(currentUser.id).subscribe(data => {
         this.user = data;
         this.username = data.username;
@@ -71,28 +76,39 @@ export class MainComponent implements OnInit {
       let currentDate = new Date('2023-10-12');
 
       this.postService.getPosts(currentUser.id).subscribe(data => {
-        this.posts = data;
+        if(data && data.length > 0) {
+          this.posts = data;
 
-        this.posts.forEach((post, index) => {
-          post.image = this.getRandomImage();
+          this.posts.forEach((post, index) => {
+            post.image = this.getRandomImage();
 
-          post.timestamp = new Date(currentDate);
+            post.timestamp = new Date(currentDate);
 
-          this.postService.getAuthor(post.userId).subscribe(author => {
-            post.authorName = author.username;
+            this.postService.getAuthor(post.userId).subscribe(author => {
+              post.authorName = author.username;
+            });
+
+            currentDate.setDate(currentDate.getDate() - 1);
           });
-
-          currentDate.setDate(currentDate.getDate() - 1);
-        });
+        }
+        else {
+          this.posts = [];
+          console.log('3');
+        }
 
         this.searchPost();
       });
 
       this.registerationService.getFollowedUsers(currentUser.id).subscribe(data => {
-        this.followedUsers = data.map(user => ({
-            ...user,
-            avatar: this.getRandomAvatar()
-        }));
+        if(data && data.length > 0) {
+          this.followedUsers = data.map(user => ({
+              ...user,
+              avatar: this.getRandomAvatar()
+          }));
+        }
+        else {
+          this.followedUsers = [];
+        }
       });
     }
 
