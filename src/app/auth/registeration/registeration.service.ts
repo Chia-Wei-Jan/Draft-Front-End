@@ -54,6 +54,7 @@ export class RegisterationService {
   }
 
   clearCurrentUser(): void {
+    localStorage.clear();
     localStorage.removeItem('currentUser');
   }
 }
