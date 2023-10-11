@@ -80,6 +80,12 @@ export class AuthComponent implements OnInit {
 
   register() {
     if (this.registerForm.valid) {
+      const newUser = {
+        ...this.registerForm.value,
+      };
+
+      this.registerationService.setCurrentUser(newUser);
+
       this.router.navigate(['/main']);
     } else {
       alert('Please fill out the form correctly.');
