@@ -24,7 +24,7 @@
         </div>
         <div>
             <label>Password: </label>
-            <span>******</span>
+            <span>***********</span>
         </div>
     </div>
 
@@ -32,3 +32,44 @@
         <button routerLink="/main">Back to Main Page</button>
     </div>
 </div>
+
+
+<form [formGroup]="profileForm">
+
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input id="username" type="text" formControlName="username" placeholder="Username">
+    </div>
+  
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" type="email" formControlName="email" placeholder="Email">
+      <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error-message">
+        Please enter a valid email.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="zipcode">Zipcode:</label>
+      <input id="zipcode" type="text" formControlName="zipcode" placeholder="Zipcode">
+      <div *ngIf="profileForm.get('zipcode')?.invalid && profileForm.get('zipcode')?.touched" class="error-message">
+        Zipcode must be 5 digits.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input id="phone" type="text" formControlName="phone" placeholder="Phone">
+      <div *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched" class="error-message">
+        Phone number must be in the format XXX-XXX-XXXX.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input id="password" type="password" formControlName="password" placeholder="Password">
+    </div>
+  
+    <button (click)="updateProfile()">Update</button>
+  
+  </form>

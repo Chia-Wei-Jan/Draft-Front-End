@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterationService } from '../auth/registeration/registeration.service';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -16,44 +17,94 @@ export class ProfileComponent implements OnInit {
 
   selectAvatar: File | null = null;
 
-  constructor(private registerationService: RegisterationService) {}
+  profileForm: FormGroup;
+
+  constructor(private registerationService: RegisterationService, private fb: FormBuilder) {
+    this.profileForm = new FormGroup({
+      username: new FormControl(''),
+      email: new FormControl(''),
+      zipcode: new FormControl(''),
+      phone: new FormControl(''),
+      password: new FormControl(''),
+    });
+  }
 
   ngOnInit(): void {
     const currentUser = this.registerationService.getCurrentUser();
 
-    if (currentUser) {
-      this.username = currentUser.username || '';
-      this.email = currentUser.email || '';
+    // Default values to prevent possible undefined errors.
+    const defaultUser = {
+      username: '',
+      email: '',
+      phone: '',
+      address: { zipcode: '' },
+      avatarUrl: this.avatarUrl
+    };
 
-      
-      if (currentUser.address && currentUser.address.zipcode) {
-        const formattedZipcode = currentUser.address.zipcode.split('-')[0];
-        this.zipcode = (formattedZipcode.length === 5) ? formattedZipcode : 'Invalid';
-      } else {
-        this.zipcode = '';
-      }
-  
+    const user = { ...defaultUser, ...currentUser };
 
-      if (currentUser.phone) {
-        const formattedPhone = currentUser.phone.split(' x')[0];
-        this.phone = formattedPhone || 'Invalid';
-      } else {
-        this.phone = '';
-      }
+    this.username = user.username;
+    this.email = user.email;
+    this.phone = user.phone.split(' x')[0];  // Assuming your format.
+    this.zipcode = user.address.zipcode.split('-')[0];  // Assuming your format.
+    this.password = '*'.repeat(user.password.length);
+    this.avatarUrl = user.avatarUrl;
 
-      this.password = '******';  
-
-      if (currentUser.avatarUrl) {
-        this.avatarUrl = currentUser.avatarUrl;
-      }
-    }
+    this.profileForm = this.fb.group({
+      username: [''],
+      email: ['', [Validators.required, Validators.email]],
+      zipcode: ['', [Validators.pattern(/^\d{5}$/)]],
+      phone: ['', [Validators.pattern(/^\d{3}-\d{3}-\d{4}$/)]],
+      password: ['']
+    });
   }
 
-  
   uploadAvatar(event: Event): void {
     const input = event?.target as HTMLInputElement;
     if(input.files && input.files[0]) {
       this.selectAvatar = input.files[0];
     }
+  }
+
+  updateProfile() {
+    let hasError = false;
+
+    if (this.profileForm.controls['username'].value && !this.profileForm.controls['username'].valid) {
+        alert('Username is invalid.');
+        hasError = true;
+    }
+    if (this.profileForm.controls['email'].value && !this.profileForm.controls['email'].valid) {
+        alert('Please enter a valid email.');
+        hasError = true;
+    }
+    if (this.profileForm.controls['zipcode'].value && !this.profileForm.controls['zipcode'].valid) {
+        alert('Zipcode must be 5 digits.');
+        hasError = true;
+    }
+    if (this.profileForm.controls['phone'].value && !this.profileForm.controls['phone'].valid) {
+        alert('Phone number must be in the format XXX-XXX-XXXX.');
+        hasError = true;
+    }
+
+    if (hasError) {
+        return;
+    }
+
+    // Update the fields that have a value entered
+    if (this.profileForm.value.username) {
+        this.username = this.profileForm.value.username;
+    }
+    if (this.profileForm.value.email) {
+        this.email = this.profileForm.value.email;
+    }
+    if (this.profileForm.value.zipcode) {
+        this.zipcode = this.profileForm.value.zipcode;
+    }
+    if (this.profileForm.value.phone) {
+        this.phone = this.profileForm.value.phone;
+    }
+    if (this.profileForm.controls['password'].value) {
+      this.password = '*'.repeat(this.profileForm.controls['password'].value.length);
+  }
   }
 }
