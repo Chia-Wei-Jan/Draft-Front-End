@@ -68,21 +68,30 @@ export class MainComponent implements OnInit {
         this.username = data.username;
       })
 
+      let currentDate = new Date('2023-10-12');
+
       this.postService.getPosts(currentUser.id).subscribe(data => {
         this.posts = data;
 
-        this.posts.forEach(post => {
+        this.posts.forEach((post, index) => {
+          post.image = this.getRandomImage();
+
+          post.timestamp = new Date(currentDate);
+
           this.postService.getAuthor(post.userId).subscribe(author => {
             post.authorName = author.username;
           });
+
+          currentDate.setDate(currentDate.getDate() - 1);
         });
+
         this.searchPost();
       });
 
       this.registerationService.getFollowedUsers(currentUser.id).subscribe(data => {
         this.followedUsers = data.map(user => ({
             ...user,
-            avatar: this.getRandomImage()
+            avatar: this.getRandomAvatar()
         }));
       });
     }
@@ -107,7 +116,7 @@ export class MainComponent implements OnInit {
       const newFollower = {
         name: this.newFollowerName,
         headline: this.getCatchPhrase(),
-        avatar: this.getRandomImage()
+        avatar: this.getRandomAvatar()
       };
   
       this.followedUsers.unshift(newFollower);
@@ -125,15 +134,24 @@ export class MainComponent implements OnInit {
   }
 
   getRandomImage(): string {
+    return `https://picsum.photos/800/300?random=${Math.random()}`;
+  }
+
+  getRandomAvatar(): string {
     return `https://picsum.photos/200/300?random=${Math.random()}`;
   }
 
   submitPost(): void {
     if(this.newPostTitle.trim() && this.newPostContent.trim()) {
+      const latestPostDate = this.posts[0]?.timestamp || new Date('2023-10-12');
+      const newPostDate = new Date(latestPostDate);
+      newPostDate.setDate(newPostDate.getDate() + 1);
+
       const newPost = {
         title: this.newPostTitle,
         body: this.newPostContent,
-        authorName: this.username
+        authorName: this.username,
+        timestamp: newPostDate
       }
 
       this.filterPost.unshift(newPost);
@@ -144,7 +162,7 @@ export class MainComponent implements OnInit {
     }
   }
 
-  searchPost(): void {
+  searchPost(): void { 
     if(this.searchKeyword) {
       const tolowerSearchKeyword = this.searchKeyword.toLocaleLowerCase();
       this.filterPost = this.posts.filter(post => 
