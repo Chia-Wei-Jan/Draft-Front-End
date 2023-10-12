@@ -63,6 +63,7 @@ export class AuthComponent implements OnInit {
 
   login() {
     const val = this.loginForm.value;
+
     if (val.username && val.password) {
       this.registerationService.loginUser(val.username, val.password).subscribe((user: any[]) => {
         if (user) {
@@ -83,7 +84,8 @@ export class AuthComponent implements OnInit {
       const newUser = {
         ...this.registerForm.value,
       };
-
+      console.log(this.registerForm.value.username)
+      console.log(this.registerForm.value.zipcode)
       this.registerationService.setCurrentUser(newUser);
 
       this.router.navigate(['/main']);
