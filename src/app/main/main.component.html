@@ -44,7 +44,7 @@
       <ng-container *ngIf="!newUser">
         <li *ngFor="let user of followedUsers; let i = index">
           <img [src]="user.avatar">
-          <h4>{{ user.name }}</h4>
+          <h4>{{ user.username }}</h4>
           <p>{{ user.headline }}</p>
           <button (click)="unfollowUser(i)">Unfollow</button>
         </li>
@@ -54,11 +54,11 @@
 
   <div class="buttons">
     <div class="auth-button">
-      <button routerLink="/auth">Go to Landing Page</button>
+      <button routerLink="/auth">Logout</button>
     </div>
 
     <div class="profile-button">
-      <button (click)="viewProfile()">Go to Profile Page</button>
+      <button (click)="viewProfile()">Profile</button>
     </div>
   </div>
 

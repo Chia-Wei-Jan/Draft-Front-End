@@ -67,7 +67,6 @@ export class MainComponent implements OnInit {
     }
 
     if(currentUser && currentUser.id) {
-      console.log('5');
       this.postService.getUser(currentUser.id).subscribe(data => {
         this.user = data;
         this.username = data.username;
@@ -93,7 +92,6 @@ export class MainComponent implements OnInit {
         }
         else {
           this.posts = [];
-          console.log('3');
         }
 
         this.searchPost();
