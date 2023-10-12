@@ -1,80 +1,64 @@
-<div class="center-container">
-<div class="profile">
-  <div class="profile-container">
-    <div class="profile-info">
-        <div class="profile-avatar">
-            <img [src]="avatarUrl" alt="User Avatar" class="avatar">
-            <input type="file" #inputImage (change)="uploadAvatar($event)" style="display: none;">   
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="col-md-2 text-right">
+        <button class="btn btn-secondary" routerLink="/main">Main Page</button>
+      </div>
+      <div class="card">
+        <div class="card-header text-center">Profile Information</div>
+        <div class="card-body d-flex">
+
+          <div class="d-flex flex-column align-items-center justify-content-center w-50">
+            <img [src]="avatarUrl" alt="User Avatar" class="img-thumbnail mb-3" style="width: 100px; height: 150px;">
+            <button class="btn btn-primary mb-2" (click)="inputImage.click()">Add Photo</button>
+            <input type="file" #inputImage (change)="uploadAvatar($event)" class="d-none">
+            <div class="mt-3">
+                <p><strong>Username: </strong>{{ username }}</p>
+                <p><strong>Email: </strong>{{ email }}</p>
+                <p><strong>Zipcode: </strong>{{ zipcode }}</p>
+                <p><strong>Phone: </strong>{{ phone }}</p>
+                <p><strong>Password: </strong>***********</p>
+            </div>
+          </div>
+
+          <div class="w-50 pl-4">
+            <form [formGroup]="profileForm">
+
+              <div class="form-group">
+                <label for="username">Username:</label>
+                <input id="username" type="text" class="form-control" formControlName="username" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input id="email" type="email" class="form-control" formControlName="email" placeholder="Email">
+                <small *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="text-danger">
+                  Please enter a valid email.
+                </small>
+              </div>
+              <div class="form-group">
+                <label for="zipcode">Zipcode:</label>
+                <input id="zipcode" type="text" class="form-control" formControlName="zipcode" placeholder="Zipcode">
+                <small *ngIf="profileForm.get('zipcode')?.invalid && profileForm.get('zipcode')?.touched" class="text-danger">
+                  Zipcode must be 5 digits.
+                </small>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input id="phone" type="text" class="form-control" formControlName="phone" placeholder="Phone">
+                <small *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched" class="text-danger">
+                  Phone number must be in the format XXX-XXX-XXXX.
+                </small>
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <input id="password" type="password" class="form-control" formControlName="password" placeholder="Password">
+              </div>
+
+              <button class="btn btn-success" (click)="updateProfile()">Update</button>
+            </form>
+          </div>
         </div>
-        <div>
-          <button class="add-photo-button" (click)="inputImage.click()">Add Photo</button>  
-        </div>
-        <h2>Profile Information</h2>
-        <div>
-            <label>Username: </label>
-            <span>{{ username }}</span>
-        </div>
-        <div>
-            <label>Email: </label>
-            <span>{{ email }}</span>
-        </div>
-        <div>
-            <label>Zipcode: </label>
-            <span>{{ zipcode }}</span>
-        </div>
-        <div>
-            <label>Phone: </label>
-            <span>{{ phone }}</span>
-        </div>
-        <div>
-            <label>Password: </label>
-            <span>***********</span>
-        </div>
+      </div>
     </div>
   </div>
-
-    <form [formGroup]="profileForm">
-
-      <div class="form-group">
-        <label for="username">Username:</label><br>
-        <input id="username" type="text" formControlName="username" placeholder="Username">
-      </div>
-    
-      <div class="form-group">
-        <label for="email">Email:</label><br>
-        <input id="email" type="email" formControlName="email" placeholder="Email">
-        <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error-message">
-          Please enter a valid email.
-        </div>
-      </div>
-    
-      <div class="form-group">
-        <label for="zipcode">Zipcode:</label><br>
-        <input id="zipcode" type="text" formControlName="zipcode" placeholder="Zipcode">
-        <div *ngIf="profileForm.get('zipcode')?.invalid && profileForm.get('zipcode')?.touched" class="error-message">
-          Zipcode must be 5 digits.
-        </div>
-      </div>
-    
-      <div class="form-group">
-        <label for="phone">Phone:</label><br>
-        <input id="phone" type="text" formControlName="phone" placeholder="Phone">
-        <div *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched" class="error-message">
-          Phone number must be in the format XXX-XXX-XXXX.
-        </div>
-      </div>
-    
-      <div class="form-group">
-        <label for="password">Password:</label><br>
-        <input id="password" type="password" formControlName="password" placeholder="Password"><br><br>
-      </div>
-    
-      <button (click)="updateProfile()">Update</button>
-    
-    </form>
-
-</div>
-</div>
-<div class="navigate-main">
-  <button routerLink="/main">Main Page</button>
 </div>

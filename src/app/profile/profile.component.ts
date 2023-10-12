@@ -8,7 +8,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  avatarUrl: string = 'https://picsum.photos/id/237/200/300'; 
+  avatarUrl: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png'; 
   username: string = '';
   email: string = '';
   zipcode: string = '';
