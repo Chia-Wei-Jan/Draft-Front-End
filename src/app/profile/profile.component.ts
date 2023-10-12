@@ -45,9 +45,20 @@ export class ProfileComponent implements OnInit {
 
     this.username = user.username;
     this.email = user.email;
-    this.phone = user.phone.split(' x')[0];  // Assuming your format.
-    this.zipcode = user.address.zipcode.split('-')[0];  // Assuming your format.
-    this.password = '*'.repeat(user.password.length);
+    this.phone = user.phone.split(' x')[0];
+    if (this.phone.startsWith('1-')) {
+      this.phone = this.phone.slice(2); 
+    }
+
+    if(user.zipcode) {
+      this.zipcode = user.zipcode;
+    }
+    else {
+      this.zipcode = user.address.zipcode.split('-')[0]; 
+    }
+
+
+    //this.password = '*'.repeat(user.password.length);
     this.avatarUrl = user.avatarUrl;
 
     this.profileForm = this.fb.group({
@@ -70,19 +81,20 @@ export class ProfileComponent implements OnInit {
     let hasError = false;
 
     if (this.profileForm.controls['username'].value && !this.profileForm.controls['username'].valid) {
-        alert('Username is invalid.');
+     //   alert('Username is invalid.');
         hasError = true;
     }
     if (this.profileForm.controls['email'].value && !this.profileForm.controls['email'].valid) {
-        alert('Please enter a valid email.');
+    //    alert('Please enter a valid email.');
         hasError = true;
     }
+
     if (this.profileForm.controls['zipcode'].value && !this.profileForm.controls['zipcode'].valid) {
-        alert('Zipcode must be 5 digits.');
+     //   alert('Zipcode must be 5 digits.');
         hasError = true;
     }
     if (this.profileForm.controls['phone'].value && !this.profileForm.controls['phone'].valid) {
-        alert('Phone number must be in the format XXX-XXX-XXXX.');
+      //  alert('Phone number must be in the format XXX-XXX-XXXX.');
         hasError = true;
     }
 
