@@ -11,7 +11,7 @@ import { PostsComponent } from './main/posts/posts.component';
 import { MainComponent } from './main/main.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterationComponent } from './auth/registeration/registeration.component';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import { RegisterationComponent } from './auth/registeration/registeration.compo
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ModalModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
