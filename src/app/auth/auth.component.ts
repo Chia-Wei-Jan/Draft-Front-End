@@ -84,13 +84,10 @@ export class AuthComponent implements OnInit {
       const newUser = {
         ...this.registerForm.value,
       };
-      console.log(this.registerForm.value.username)
-      console.log(this.registerForm.value.zipcode)
+      
       this.registerationService.setCurrentUser(newUser);
 
       this.router.navigate(['/main']);
-    } else {
-      alert('Please fill out the form correctly.');
-    }
+    } 
   }  
 }

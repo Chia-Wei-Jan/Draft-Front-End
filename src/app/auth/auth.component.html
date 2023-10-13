@@ -42,22 +42,28 @@
               </div>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Zipcode (12345)" formControlName="zipcode">
-              <div *ngIf="registerForm.controls['zipcode'].touched && registerForm.controls['zipcode'].hasError('invalidZipcode')" class="error-message mt-2">
-                Please enter a 5-digit number
-              </div>
-            </div>
-            <div class="form-group">
               <input type="text" class="form-control" placeholder="Phone (123-456-7890)" formControlName="phone">
               <div *ngIf="registerForm.controls['phone'].touched && registerForm.controls['phone'].hasError('invalidPhone')" class="error-message mt-2">
                 Please enter XXX-XXX-XXXX format
               </div>
             </div>
             <div class="form-group">
+              <input type="date" class="form-control" placeholder="Date of Birth" formControlName="dateOfBirth">
+              <div class="error-message mt-2">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Zipcode (12345)" formControlName="zipcode">
+              <div *ngIf="registerForm.controls['zipcode'].touched && registerForm.controls['zipcode'].hasError('invalidZipcode')" class="error-message mt-2">
+                Please enter a 5-digit number
+              </div>
+            </div>
+            <div class="form-group">
               <input type="password" class="form-control" placeholder="Password" formControlName="password">
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword">
+              <input type="password" class="form-control" placeholder="Confirm Pphoassword" formControlName="confirmPassword">
               <div *ngIf="registerForm.controls['confirmPassword'].touched && registerForm.hasError('mismatchedPasswords')" class="error-message mt-2">
                 Passwords do not match
               </div>
