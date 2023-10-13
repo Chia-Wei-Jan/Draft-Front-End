@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class MainComponent implements OnInit {
 
   headline: string = 'To be or not to be, that is the question.';
-  newHeadline: string = ''; // Temporary storage for the new headline being edited
+  newHeadline: string = ''; 
   avatarUrl: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png'; // Assuming a local path; replace with actual path
 
 

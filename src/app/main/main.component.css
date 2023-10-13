@@ -30,7 +30,7 @@
 .edit-headline {
     display: flex;
     gap: 10px;
-    margin-bottom: 10px;  /* Separation from the search bar */
+    margin-bottom: 10px; 
 }
 
 .search-bar {
@@ -98,5 +98,5 @@
 }
 
 button:hover {
-    background-color: #0056b3;  /* A slightly darker shade for hover */
+    background-color: #0056b3;  
 }
