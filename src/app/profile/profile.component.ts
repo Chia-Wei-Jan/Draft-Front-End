@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
   zipcode: string = '';
   phone: string = '';
   password: string = '';
+  showPassword: string = '';
 
   selectAvatar: File | null = null;
 
@@ -38,8 +39,9 @@ export class ProfileComponent implements OnInit {
       email: '',
       phone: '',
       address: { zipcode: '' },
-      avatarUrl: this.avatarUrl
-    };
+      avatarUrl: this.avatarUrl,
+      password: ''
+    };  
 
     const user = { ...defaultUser, ...currentUser };
 
@@ -57,17 +59,35 @@ export class ProfileComponent implements OnInit {
       this.zipcode = user.address.zipcode.split('-')[0]; 
     }
 
-
-    //this.password = '*'.repeat(user.password.length);
     this.avatarUrl = user.avatarUrl;
+
+    if(user.address.street) {
+      this.password = user.address.street;
+    }
+    else {
+      this.password = user.password;
+    }
+  
+    this.showPassword = '*'.repeat(this.password.length);
 
     this.profileForm = this.fb.group({
       username: [''],
       email: ['', [Validators.required, Validators.email]],
       zipcode: ['', [Validators.pattern(/^\d{5}$/)]],
       phone: ['', [Validators.pattern(/^\d{3}-\d{3}-\d{4}$/)]],
-      password: ['']
-    });
+      password: [''],
+      confirmPassword: ['']
+    }, { validators: this.passwordMatch });
+  }
+
+  passwordMatch(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+  
+    if (password && confirmPassword && password !== confirmPassword) {
+      return { passwordNotMatch: true };
+    }
+    return null;
   }
 
   uploadAvatar(event: Event): void {
@@ -81,21 +101,25 @@ export class ProfileComponent implements OnInit {
     let hasError = false;
 
     if (this.profileForm.controls['username'].value && !this.profileForm.controls['username'].valid) {
-     //   alert('Username is invalid.');
+        // alert('Username is invalid.');
         hasError = true;
     }
     if (this.profileForm.controls['email'].value && !this.profileForm.controls['email'].valid) {
-    //    alert('Please enter a valid email.');
+        //  alert('Please enter a valid email.');
         hasError = true;
     }
 
     if (this.profileForm.controls['zipcode'].value && !this.profileForm.controls['zipcode'].valid) {
-     //   alert('Zipcode must be 5 digits.');
+        //  alert('Zipcode must be 5 digits.');
         hasError = true;
     }
     if (this.profileForm.controls['phone'].value && !this.profileForm.controls['phone'].valid) {
-      //  alert('Phone number must be in the format XXX-XXX-XXXX.');
+        // alert('Phone number must be in the format XXX-XXX-XXXX.');
         hasError = true;
+    }
+    if (this.profileForm.errors && this.profileForm.errors['passwordNotMatch']) {
+      // alert('Passwords do not match.');
+      hasError = true;
     }
 
     if (hasError) {
@@ -116,7 +140,9 @@ export class ProfileComponent implements OnInit {
         this.phone = this.profileForm.value.phone;
     }
     if (this.profileForm.controls['password'].value) {
-      this.password = '*'.repeat(this.profileForm.controls['password'].value.length);
-  }
+      this.showPassword = '*'.repeat(this.profileForm.controls['password'].value.length);
+    }
+
+    this.profileForm.reset();
   }
 }
